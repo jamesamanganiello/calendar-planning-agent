@@ -1,20 +1,29 @@
-Prerequisites
--Claude Desktop with Cowork mode
--Connectors enabled: Google Calendar, Gmail, Notion
--Notion task database with these properties:
---Task (title)
---Status (select: Not Started / In Progress / DIDN'T DO / Completed)
---Priority (select: High / Medium / Low)
---Date (date)
+# Calendar Planning Agent — Claude Desktop (Cowork Mode)
 
-Setup
-Open Claude Desktop → Scheduled section → Create new task
-Set the cron to your preferred time (e.g., 0 21 * * * for 9 PM daily)
-Paste the prompt below — replace the [PLACEHOLDERS] with your info
-Run it manually first to test
+> A nightly agent that pulls tasks from Notion, blocks your Google Calendar, and emails you a daily briefing.
 
-The Prompt
+## Prerequisites
 
+- **Claude Desktop** with Cowork mode
+- **Connectors enabled:** Google Calendar, Gmail, Notion
+- **Notion task database** with these properties:
+  - Task (title)
+  - Status (select: `Not Started` / `In Progress` / `DIDN'T DO` / `Completed`)
+  - Priority (select: `High` / `Medium` / `Low`)
+  - Date (date)
+
+## Setup
+
+1. Open Claude Desktop → Scheduled section → Create new task
+2. Set the cron to your preferred time (e.g., `0 21 * * *` for 9 PM daily)
+3. Paste the prompt below — replace the `[PLACEHOLDERS]` with your info
+4. Run it manually first to test
+
+---
+
+## The Prompt
+
+```
 ROLE: You are a personal assistant bot. You help create a clear calendar for me and help me prep for my next day.
 
 TRIGGERS:
@@ -126,7 +135,13 @@ CONSTRAINTS:
 • Working hours: 8 AM – 7 PM [YOUR TIMEZONE]
 • Never schedule "DIDN'T DO" tasks
 • Always verify actual dates on tasks — never assume
-How It Works
+```
+
+---
+
+## How It Works
+
+```
 9:00 PM  → Calendar Planner runs
            ├── Reads Notion tasks for tomorrow
            ├── Checks tomorrow's calendar for conflicts
@@ -134,9 +149,17 @@ How It Works
            ├── Schedules tactical work (grouped)
            ├── Adds 2 breaks
            └── Sends prep email with meeting briefs + task list
-Tips
-Stagger with other agents: If you also run a meeting notes agent, schedule it ~1 hour before so tasks are populated in Notion before the planner reads them.
-Interview prep: Add a rule to reserve 30 min before real interviews if you're job hunting.
-"DIDN'T DO" status: Use this for tasks you're deprioritizing — the agent skips them so they don't clutter your calendar.
-Manual trigger: Run it anytime and it asks which date to plan for, without sending the email.
+```
+
+---
+
+## Tips
+
+- **Stagger with other agents**: If you also run a meeting notes agent, schedule it ~1 hour before so tasks are populated in Notion before the planner reads them.
+- **Interview prep**: Add a rule to reserve 30 min before real interviews if you're job hunting.
+- **"DIDN'T DO" status**: Use this for tasks you're deprioritizing — the agent skips them so they don't clutter your calendar.
+- **Manual trigger**: Run it anytime and it asks which date to plan for, without sending the email.
+
+---
+
 Built with Claude Desktop (Cowork mode) + Google Calendar, Gmail, and Notion connectors.
